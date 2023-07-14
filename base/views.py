@@ -12,7 +12,6 @@ def index(request):
 
 
 def game_1(request):
-
     return render(request, 'game_1.html')
 
 def get_data(request):
@@ -37,37 +36,6 @@ def get_data(request):
             json.dump(sorted_dict, f, indent=4)
     return JsonResponse(sorted_dict)
 
-
-def show_data(request):
-    with open ('data.json', 'r') as f:
-        f = json.loads(f.read())
-    # hero_a = choice(list(f))
-    # hero_b = choice([hero for hero in list(f) if hero != hero_a])
-    return JsonResponse(f, safe=False)
-
-def game_hero(request):
-
-    with open ('data.json', 'r') as f:
-        f = json.loads(f.read())
-    hero_a = choice(list(f))
-    hero_a_wr_hgc = float(f[hero_a][0][:-1])
-    # Just excluding first picked hero so it doesn't show up twice 
-    hero_b = choice([hero for hero in list(f) if hero != hero_a])
-    hero_b_wr_hgc = float(f[hero_b][0][:-1])
-    if hero_a_wr_hgc > hero_b_wr_hgc:
-        winner = hero_a
-    else:
-        winner = hero_b
-
-    context = {
-        'hero_a':hero_a,
-        'hero_a_wr_hgc':hero_a_wr_hgc,
-        'hero_b':hero_b,
-        'hero_b_wr_hgc':hero_b_wr_hgc,
-        'winner':winner
-    }
-    return render(request, 'game_1.html', context)
-
 def random_heroes(request):
 
     with open ('data.json', 'r') as f:
@@ -77,7 +45,41 @@ def random_heroes(request):
     return JsonResponse([{'out_1':hero_a},{'out_2':hero_b}], safe=False)
 
 
+     
 
     #TO DO:
 # DODAJ SKOR
 # STAVI MODAL DA PITA ZA BRACKET NA LOAD PAGE ODMA
+
+
+
+# def game_hero(request):
+
+#     with open ('data.json', 'r') as f:
+#         f = json.loads(f.read())
+#     hero_a = choice(list(f))
+#     hero_a_wr_hgc = float(f[hero_a][0][:-1])
+#     # Just excluding first picked hero so it doesn't show up twice 
+#     hero_b = choice([hero for hero in list(f) if hero != hero_a])
+#     hero_b_wr_hgc = float(f[hero_b][0][:-1])
+#     if hero_a_wr_hgc > hero_b_wr_hgc:
+#         winner = hero_a
+#     else:
+#         winner = hero_b
+
+#     context = {
+#         'hero_a':hero_a,
+#         'hero_a_wr_hgc':hero_a_wr_hgc,
+#         'hero_b':hero_b,
+#         'hero_b_wr_hgc':hero_b_wr_hgc,
+#         'winner':winner
+#     }
+#     return render(request, 'game_1.html', context)
+
+
+# def show_data(request):
+#     with open ('data.json', 'r') as f:
+#         f = json.loads(f.read())
+#     # hero_a = choice(list(f))
+#     # hero_b = choice([hero for hero in list(f) if hero != hero_a])
+#     return JsonResponse(f, safe=False)
