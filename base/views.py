@@ -3,6 +3,7 @@ from django.http import HttpResponse, JsonResponse
 from bs4 import BeautifulSoup as bs
 import requests
 import json
+from random import *
 
 BRACKET_LIST = ["Herald", "Guardian", "Crusader", "Archon", "Legend", "Ancient", "Divine-Immortal"]
 
@@ -40,4 +41,27 @@ def get_data(request):
 def show_data(request):
     with open ('data.json', 'r') as f:
         f = json.loads(f.read())
-        return JsonResponse(f, safe=False)
+    # hero_a = choice(list(f))
+    # hero_b = choice([hero for hero in list(f) if hero != hero_a])
+    return JsonResponse(f, safe=False)
+
+def game_hero(request):
+    with open ('data.json', 'r') as f:
+        f = json.loads(f.read())
+    hero_a = choice(list(f))
+    hero_a_wr_hgc = f[hero_a][0][:-1]
+    # Just excluding first picked hero so it doesn't show up twice 
+    hero_b = choice([hero for hero in list(f) if hero != hero_a])
+    hero_b_wr_hgc = f[hero_b][0][:-1]
+
+    context = {
+        'hero_a':hero_a,
+        'hero_a_wr_hgc':hero_a_wr_hgc,
+        'hero_b':hero_b,
+        'hero_b_wr_hgc':hero_b_wr_hgc,
+    }
+    return render(request, 'game_1.html', context)
+    
+    #TO DO:
+# DODAJ SKOR
+# STAVI MODAL DA PITA ZA BRACKET NA LOAD PAGE ODMA
