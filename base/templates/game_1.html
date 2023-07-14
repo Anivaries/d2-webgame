@@ -1,16 +1,55 @@
 {% extends 'base.html' %}
 {% block game_1%}
 <div class="container p-5">
-    <center>Which hero has higher winrate?</center>
+    <center>Which hero has higher winrate in:</center>
+    <!-- Mozes staviti slike mesto texta -->
+    <center>Herald-Guardian-Crusader bracket</center>
     <div class="row">
         <div class="col-6">
-            <center>{{hero_a}}</center>
-            <center>Win rate: {{hero_a_wr_hgc}}</center>
+            <center>
+                <div class="hero_a" id="hero_a_name">
+                    {% comment %} {{hero_a}} {% endcomment %}
+                </div></center>
+            <center><div id="hero_a_wr_hgc">
+                {% comment %} Win rate: {{hero_a_wr_hgc}}% {% endcomment %}
+            </div></center>
+            {% comment %} <center><button class="btn" value="Submit" id="{{hero_a}}">{{hero_a}}</button></center> {% endcomment %}
+            <center><a href="{% url 'g1' %}"><button class="btn" value="Submit" id="{{hero_a}}">{{hero_a}}</button></a></center>
         </div>
         <div class="col-6">
-            <center>{{hero_b}}</center>
-            <center>Win rate: {{hero_b_wr_hgc}}</center>
+            <center><div id="hero_b_name">
+                {% comment %} {{hero_b}} {% endcomment %}
+            </div></center>
+            <center><div id="hero_b_wr_hgc">
+                {% comment %} Win rate: {{hero_b_wr_hgc}}% {% endcomment %}
+            </div></center>
+            <center><a href="{% url 'g1' %}"><button class="btn" value="Submit" id="{{hero_b}}">{{hero_b}}</button></a></center>
         </div>
+        {{winner}}
     </div>
 </div>
+<button onclick="getData()">get random item</button>
+
+<script>
+    function getData(callback) {
+        $('#hero_a_name').html("");
+        $('#hero_b_name').html("");
+        $('#hero_a_wr_hgc').html("");
+        $('#hero_b_wr_hgc').html("");
+          $.ajax({
+            url: '{% url 'random_heroes'%}',
+            type: 'GET',
+            dataType: 'json',
+            success: function(data){
+                $("#hero_a_name").append(data[0].out_1[0])
+                $("#hero_b_name").append(data[1].out_2[0])
+                $("#hero_a_wr_hgc").append(data[0].out_1[1][0])
+                $("#hero_b_wr_hgc").append(data[1].out_2[1][0])
+                console.log(data[0].out_1[1][0]);
+                console.log(data[1].out_2[0]);
+            }
+          });
+        };
+    
+</script>
 {% endblock %}
