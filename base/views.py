@@ -69,7 +69,7 @@ def random_heroes(request):
 def chckfun(*args, **kwargs):
     winner = args[0]
     test_winner = winner
-    print(kwargs)
+    print("JA SAM POZVAN")
 
     # print(winner)
 def check_winner(request):
