@@ -23,19 +23,28 @@
             <center><div id="hero_b_wr_hgc">
                 {% comment %} Win rate: {{hero_b_wr_hgc}}% {% endcomment %}
             </div></center>
-            <center><a href="{% url 'game' %}"><button class="btn" value="Submit" id="{{hero_b}}">{{hero_b}}</button></a></center>
+            <center><a href="{% url 'check_winner' %}"><button class="btn" value="Submit" id="{{hero_b}}">{{hero_b}}</button></a></center>
         </div>
     </div>
-    <center><button onclick="getData()">get random item</button></center>
+    {% comment %} <form method="post" action="{% url 'check_winner'%}">
+        {% csrf_token %}
+        <button name="hero_a_button" type="submit" value="{{hero_a}}" id="hero_a_button">{{hero_a}}</button>
+        <button name="hero_b_button" type="submit" value="{{hero_b}}" id="hero_b_button">{{hero_b}}</button>
+      </form> {% endcomment %}
+    <center><button onclick="getData()" name="{{hero_a}}" id="hero_a_button">get random item</button></center>
+    <center><button onclick="getData()" name="{{hero_b}}" id="hero_b_button">get random item</button></center>
 </div>
 
-
-<script>
+{{request.POST}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(getData())
+    
     function getData(callback) {
-        $('#hero_a_name').html("");
-        $('#hero_b_name').html("");
-        $('#hero_a_wr_hgc').html("");
-        $('#hero_b_wr_hgc').html("");
+        //$('#hero_a_name').html("");
+        //$('#hero_b_name').html("");
+        //$('#hero_a_wr_hgc').html("");
+        //$('#hero_b_wr_hgc').html("");
           $.ajax({
             url: '{% url 'random_heroes'%}',
             type: 'GET',
@@ -45,9 +54,46 @@
                 $("#hero_b_name").append(data[1].out_2[0])
                 $("#hero_a_wr_hgc").append(data[0].out_1[1][0])
                 $("#hero_b_wr_hgc").append(data[1].out_2[1][0])
+                //console.log(data[2].winner)
+                //if (document.getElementById('hero_a_name').innerHTML == data[2].winner){
+                    //console.log(data[2].winner+" Is winner");
+                //}
+                    //else {
+                        //console.log("You lose");
+                        //console.log(document.getElementById('hero_a_name').innerHTML);
+                        //console.log(document.getElementById('hero_b_name').innerHTML);
+                    //}
+                
+                //document.getElementById('hero_a_button').value=data[0].out_1[0];
+                //document.getElementById('hero_b_button').value=data[1].out_2[0];
+
             }
           });
         };
+    {% comment %} function getMama(callback){
+        $("button").click(function(e){
+            console.log(document.getElementById('hero_a_name').innerHTML);
+            //getData();
+            console.log(document.getElementById('hero_b_name').innerHTML);
+        });
+    } {% endcomment %}
+    $(document).on('click', '#hero_a_button', function(e){
+        e.preventDefault();
+        alert (document.getElementById('hero_a_name').innerHTML);
+        $('#hero_a_name').html("");
+        $('#hero_b_name').html("");
+        $('#hero_a_wr_hgc').html("");
+        $('#hero_b_wr_hgc').html("");
+    });
+    $(document).on('click', '#hero_b_button', function(e){
+        e.preventDefault();
+        alert (document.getElementById('hero_b_name').innerHTML);
+        $('#hero_a_name').html("");
+        $('#hero_b_name').html("");
+        $('#hero_a_wr_hgc').html("");
+        $('#hero_b_wr_hgc').html("");
+    });
+    
     
 </script>
 {% endblock %}
