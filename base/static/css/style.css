@@ -1,5 +1,5 @@
 body {
-    background-image: url('images/u79jn5I.webp');
+    background-image: url('images/u79jn5I_c.webp');
     background-size: 200vh;
 }
 
@@ -15,15 +15,6 @@ body {
 #rankFive {
     width: 80%;
     height: auto;
-}
-
-.vl {
-    border-left: 6px solid rgb(0, 0, 0);
-    height: 100vh;
-    position: absolute;
-    left: 50%;
-    margin-left: -3px;
-    top: 0;
 }
 
 button {

@@ -22,7 +22,7 @@ def get_data(request):
         parsed_page = response.content
         soup = bs(parsed_page, "html.parser")
         sdsd = soup.select(selector="td , .link-type-hero")
-        
+        img = soup.select(selector='.image-icon')
         names_and_wr = [a.get_text() for a in sdsd]
         names = [a for a in names_and_wr[2::13]]
         herald_guar_crus = [a for a in names_and_wr[4::13]]
@@ -30,8 +30,9 @@ def get_data(request):
         legend = [a for a in names_and_wr[8::13]]
         ancient = [a for a in names_and_wr[10::13]]
         divine_immo = [a for a in names_and_wr[12::13]]
+        imgs = [image['src'] for image in img]
 
-        sorted_dict = dict(zip(names, zip(herald_guar_crus, archon, legend, ancient, divine_immo)))
+        sorted_dict = dict(zip(names, zip(herald_guar_crus, archon, legend, ancient, divine_immo, imgs)))
         with open('data.json', 'w') as f:
             json.dump(sorted_dict, f, indent=4)
     return JsonResponse(sorted_dict)
