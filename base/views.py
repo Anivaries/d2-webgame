@@ -51,7 +51,6 @@ def random_heroes(request):
     
     return JsonResponse([{'out_1':hero_a},{'out_2':hero_b}, {'winner':winner}], safe=False)
 
-
-    #TO DO:
-
-# STAVI MODAL DA PITA ZA BRACKET NA LOAD PAGE ODMA
+# TO DO:
+##
+# Styling i guess, backend seems done. Maybe track Score somewhere

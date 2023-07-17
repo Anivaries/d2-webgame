@@ -1,0 +1,33 @@
+body {
+    background-image: url('images/u79jn5I.webp');
+    background-size: 200vh;
+}
+
+
+#rankOne,
+#rankTwo,
+#rankThree,
+#rankFour {
+    width: 70%;
+    height: auto;
+}
+
+#rankFive {
+    width: 80%;
+    height: auto;
+}
+
+.vl {
+    border-left: 6px solid rgb(0, 0, 0);
+    height: 100vh;
+    position: absolute;
+    left: 50%;
+    margin-left: -3px;
+    top: 0;
+}
+
+button {
+    border: 0px;
+    background-color: white;
+    size: 70px;
+}

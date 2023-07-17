@@ -1,5 +1,11 @@
 {% extends 'base.html' %}
+{% load static%}
 {% block game_1%}
+<link
+    href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css"
+    rel="stylesheet"
+    />
+    <div class="vl shadow-2-strong"></div>
 <div class="container p-5">
     <center>Which hero has higher winrate in:</center>
     <!-- Mozes staviti slike mesto texta -->
@@ -11,23 +17,73 @@
                 </div></center>
             <center><div id="hero_a_wr_hgc">
             </div></center>
-            <center><button onclick="getData()" name="{{hero_a}}" id="hero_a_button">get random item</button></center>
+            <center><button onclick="getData()" value= "hero_a_button" id="hero_a_button">get random item</button></center>
         </div>
         <div class="col-6">
             <center><div id="hero_b_name">
             </div></center>
             <center><div id="hero_b_wr_hgc">
-
             </div></center>
-            <center><button onclick="getData()" name="{{hero_b}}" id="hero_b_button">get random item</button></center>
+            <center><button onclick="getData()" value= "hero_b_button" id="hero_b_button">get random item</button></center>
         </div>
     </div>
 </div>
+<!-- Modal Game Over -->
+<div class="modal top fade gameOver" id="gameOver" tabindex="-1" aria-labelledby="gameOverLabel" aria-hidden="true" data-mdb-backdrop="true" data-mdb-keyboard="true">
+    <div class="modal-dialog  ">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="gameOverLabel">Game Over</h5>
+          <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="showScore"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">
+            Close
+          </button>
+          <a href="{% url 'game'%}"><button type="button" class="btn btn-primary">Play again</button></a>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- Modal Bracket-->
+<div class="modal top fade chooseBracketModal" id="chooseBracketModal" tabindex="-1" aria-labelledby="chooseBracketLabel" aria-hidden="true" data-mdb-backdrop="true" data-mdb-keyboard="true">
+    <div class="modal-dialog  ">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="chooseBracketLabel">Pick a bracket</h5>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-4">
+                    <button class="seasonalRank1" value="seasonalRank1"><img src="{% static 'd2-medals/SeasonalRank1-1.webp'%}" id="rankThree"></button>
+                </div>
+                <div class="col-4">
+                    <button class="seasonalRank4" value="seasonalRank4"><img src="{% static 'd2-medals/SeasonalRank4-1.webp'%}" id="rankThree"></button>
+                </div>
+                <div class="col-4">
+                    <button class="seasonalRank5" value="seasonalRank5"><img src="{% static 'd2-medals/SeasonalRank5-1.webp'%}" id="rankThree"></button>
+                </div>
+                <div class="row" style="margin-left:65px;">   
+                    <div class="col-5">
+                        <button class="seasonalRank6" value="seasonalRank6"><img src="{% static 'd2-medals/SeasonalRank6-1.webp'%}" id="rankThree"></button>
+                    </div>
+                    <div class="col-5">
+                        <button  class="seasonalRankTop2" value="seasonalRankTop2"><img src="{% static 'd2-medals/SeasonalRankTop2.webp'%}" id="rankThree"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>  
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <script type="text/javascript">
-    $(document).ready(getData())
-    
+    window.onload = function () {
+        $('#chooseBracketModal').modal('show');
+      }
+    //$(document).ready(getData())
     var hero_a_button
     var hero_b_button
     var winner
@@ -54,9 +110,10 @@
             console.log('Win');
             score++
             console.log(score);
-            // add streak counter
         }
         else{
+            $('#showScore').html('Streak: ' +score);
+            $('#gameOver').modal('show');
             score = 0
             console.log("Loser");
         }
@@ -71,9 +128,10 @@
             console.log('Win');
             score++
             console.log(score);
-            // add streak counter
         }
         else{
+            $('#showScore').html('Streak: ' +score)
+            $('#gameOver').modal('show');
             score = 0
             console.log("Loser");
         }
@@ -82,7 +140,72 @@
         $('#hero_a_wr_hgc').html("");
         $('#hero_b_wr_hgc').html("");
     });
+    $("button").click(function(){
+        var val = $(this).val();
+            if (val != "hero_a_button" || val != "hero_b_button") {
+                var buttons = document.getElementsByTagName("button");
+                const dataSpread = Object.entries(buttons);
+                for (let [index, vall] of dataSpread.entries()){
+                    if (index > 4 && vall[1].value == val){
+                        $('#chooseBracketModal').modal('hide');
+                        $.ajax({
+                            url: '{% url 'random_heroes'%}',
+                            type: 'GET',
+                            dataType: 'json',
+                            success: function(data){
+                                hero_a_name = data[0].out_1[0]
+                                hero_b_name = data[1].out_2[0]
+                                winner = data[2].winner
+                                $("#hero_a_name").append(hero_a_name)
+                                $("#hero_b_name").append(hero_b_name)
+                               $("#hero_a_wr_hgc").append(data[0].out_1[1][index-5])
+                               $("#hero_b_wr_hgc").append(data[1].out_2[1][index-5])
+                            }
+                        })
+                    }
+                };
+            }
+            else {
+                alert("chosen_rank");
+            }
+            
     
-    
+    });
 </script>
+{% comment %} <script>
+    $("button").click(function(){
+        var val = $(this).val();
+            if (val != "hero_a_button" || val != "hero_b_button") {
+                var buttons = document.getElementsByTagName("button");
+                const dataSpread = Object.entries(buttons);
+                for (let [index, val] of dataSpread.entries()){
+                    if (index > 4){
+                        $('#chooseBracketModal').modal('hide');
+                        $.ajax({
+                            url: '{% url 'random_heroes'%}',
+                            type: 'GET',
+                            dataType: 'json',
+                            success: function(data){
+                                hero_a_name = data[0].out_1[index-5]
+                                hero_b_name = data[1].out_2[index-5]
+                                winner = data[2].winner
+                                $("#hero_a_name").append(data[0].out_1[index-5])
+                                $("#hero_b_name").append(data[1].out_2[index-5])
+                                $("#hero_a_wr_hgc").append(data[0].out_1[1][index-5])
+                                $("#hero_b_wr_hgc").append(data[1].out_2[1][index-5])
+                            }
+                        })
+                    }
+                };
+                //else if (val == "SeasonalRank1"){
+                 //   $('#chooseBracketModal').modal('hide');
+                //}
+            }
+            else {
+                alert("chosen_rank");
+            }
+    
+    });
+    
+</script> {% endcomment %}
 {% endblock %}
