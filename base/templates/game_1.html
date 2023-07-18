@@ -8,16 +8,16 @@
     <div class="row">
         <div class="col-6">
             <center><div class="hero_a" id="hero_a_name"></div></center>
-            <center><div><img id="hero_a_img" class="rounded-circle shadow-2"></div></center>
+            <center><div class="hover-zoom"><img id="hero_a_img" class="hover-shadow rounded-circle shadow-custom"></div></center>
             <center><div id="hero_a_wr_hgc">
             </div></center>
-            <center><button onclick="" value="hero_a_button" id="hero_a_button">get random item</button></center>
+            <center><button onclick="" value="hero_a_button" id="hero_a_button"></button></center>
         </div>
         <div class="col-6">
             <center><div id="hero_b_name"></div></center>
-            <center><div><img id="hero_b_img" class="rounded-circle"></div></center>
+            <center><div class="hover-zoom"><img id="hero_b_img" class="rounded-circle shadow-custom "></div></center>
             <center><div id="hero_b_wr_hgc"></div></center>
-            <center><button onclick="" value="hero_b_button" id="hero_b_button">get random item</button></center>
+            <center><button onclick="" value="hero_b_button" id="hero_b_button"></button></center>
         </div>
     </div>
 </div>
@@ -72,6 +72,10 @@
   </div>  
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+<script
+  type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"
+></script>
 <script type="text/javascript">
     window.onload = function () {
         $('#chooseBracketModal').modal('show');
@@ -85,7 +89,7 @@
     var hero_b_button
     var winner
     var score = 0;
-$(document).on('click', '#hero_a_button', function(e){
+$(document).on('click', '#hero_a_img', function(e){
     e.preventDefault();
     if (hero_a_name == winner){
         score++
@@ -133,7 +137,7 @@ $(document).on('click', '#hero_a_button', function(e){
     //$('#hero_a_wr_hgc').html("");
     //$('#hero_b_wr_hgc').html("");
 });
-$(document).on('click', '#hero_b_button', function(e){
+$(document).on('click', '#hero_b_img', function(e){
         e.preventDefault();
         if (hero_b_name == winner){
             score++

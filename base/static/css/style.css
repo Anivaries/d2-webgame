@@ -23,7 +23,9 @@ button {
     size: 70px;
 }
 
-
+.shadow-custom {
+    box-shadow: 0 2px 20px 0 rgba(0, 0, 0, .25), 0 3px 20px 19px rgba(0, 0, 0, 0.65) !important;
+}
 
 .col-6 {
     display: flex;
