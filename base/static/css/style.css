@@ -22,3 +22,12 @@ button {
     background-color: white;
     size: 70px;
 }
+
+
+
+.col-6 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+}

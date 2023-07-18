@@ -8,14 +8,14 @@
     <div class="row">
         <div class="col-6">
             <center><div class="hero_a" id="hero_a_name"></div></center>
-            <center><div><img id="hero_a_img"></div></center>
+            <center><div><img id="hero_a_img" class="rounded-circle shadow-2"></div></center>
             <center><div id="hero_a_wr_hgc">
             </div></center>
             <center><button onclick="" value="hero_a_button" id="hero_a_button">get random item</button></center>
         </div>
         <div class="col-6">
             <center><div id="hero_b_name"></div></center>
-            <center><div><img id="hero_b_img"></div></center>
+            <center><div><img id="hero_b_img" class="rounded-circle"></div></center>
             <center><div id="hero_b_wr_hgc"></div></center>
             <center><button onclick="" value="hero_b_button" id="hero_b_button">get random item</button></center>
         </div>
@@ -40,8 +40,7 @@
     </div>
   </div>
 <!-- Modal Bracket-->
-<div class="modal top fade " id="chooseBracketModal" tabindex="-1" aria-labelledby="chooseBracketLabel" aria-hidden="true" data-mdb-backdrop="static" data-mdb-keyboard="false"
->
+<div class="modal top fade " id="chooseBracketModal" tabindex="-1" aria-labelledby="chooseBracketLabel" aria-hidden="true" data-mdb-backdrop="static" data-mdb-keyboard="false">
     <div class="modal-dialog  ">
       <div class="modal-content">
         <div class="modal-header">
@@ -90,10 +89,10 @@ $(document).on('click', '#hero_a_button', function(e){
     e.preventDefault();
     if (hero_a_name == winner){
         score++
-        $('#hero_a_name').html("");
-        $('#hero_b_name').html("");
-        $('#hero_a_wr_hgc').html("");
-        $('#hero_b_wr_hgc').html("");
+        //$('#hero_a_name').html("");
+        //$('#hero_b_name').html("");
+        //$('#hero_a_wr_hgc').html("");
+        //$('#hero_b_wr_hgc').html("");
         $.ajax({
             url: '{% url 'random_heroes'%}',
             type: 'GET',
@@ -112,12 +111,12 @@ $(document).on('click', '#hero_a_button', function(e){
                 winner = data[2].winner;
                 var img_a_path = '{% static ''%}' + hero_a_image;
                 var img_b_path = '{% static ''%}' + hero_b_image;
-                $("#hero_a_name").append(hero_a_name);
+                //$("#hero_a_name").append(hero_a_name);
                 $("#hero_a_img").attr("src", img_a_path);
-                $("#hero_b_name").append(hero_b_name);
+                //$("#hero_b_name").append(hero_b_name);
                 $("#hero_b_img").attr("src", img_b_path);
-                $("#hero_a_wr_hgc").append(data[0].out_1[1][broj-5]);
-                $("#hero_b_wr_hgc").append(data[1].out_2[1][broj-5]);
+                //$("#hero_a_wr_hgc").append(data[0].out_1[1][broj-5]);
+                //$("#hero_b_wr_hgc").append(data[1].out_2[1][broj-5]);
                 
             }
         });
@@ -129,19 +128,19 @@ $(document).on('click', '#hero_a_button', function(e){
         score = 0
         console.log("Loser");
     }
-    $('#hero_a_name').html("");
-    $('#hero_b_name').html("");
-    $('#hero_a_wr_hgc').html("");
-    $('#hero_b_wr_hgc').html("");
+    //$('#hero_a_name').html("");
+    //$('#hero_b_name').html("");
+    //$('#hero_a_wr_hgc').html("");
+    //$('#hero_b_wr_hgc').html("");
 });
 $(document).on('click', '#hero_b_button', function(e){
         e.preventDefault();
         if (hero_b_name == winner){
             score++
-            $('#hero_a_name').html("");
-            $('#hero_b_name').html("");
-            $('#hero_a_wr_hgc').html("");
-            $('#hero_b_wr_hgc').html("");
+            //$('#hero_a_name').html("");
+            //$('#hero_b_name').html("");
+            //$('#hero_a_wr_hgc').html("");
+            //$('#hero_b_wr_hgc').html("");
             $.ajax({
                 url: '{% url 'random_heroes'%}',
                 type: 'GET',
@@ -160,12 +159,12 @@ $(document).on('click', '#hero_b_button', function(e){
                     winner = data[2].winner;
                     var img_a_path = '{% static ''%}' + hero_a_image;
                     var img_b_path = '{% static ''%}' + hero_b_image;
-                    $("#hero_a_name").append(hero_a_name);
+                    //$("#hero_a_name").append(hero_a_name);
                     $("#hero_a_img").attr("src", img_a_path);
-                    $("#hero_b_name").append(hero_b_name);
+                    //$("#hero_b_name").append(hero_b_name);
                     $("#hero_b_img").attr("src", img_b_path);
-                    $("#hero_a_wr_hgc").append(data[0].out_1[1][broj-5]);
-                    $("#hero_b_wr_hgc").append(data[1].out_2[1][broj-5]);
+                    //$("#hero_a_wr_hgc").append(data[0].out_1[1][broj-5]);
+                    //$("#hero_b_wr_hgc").append(data[1].out_2[1][broj-5]);
                     
                 }
             });
@@ -177,10 +176,10 @@ $(document).on('click', '#hero_b_button', function(e){
             score = 0
             console.log("Loser");
         }
-        $('#hero_a_name').html("");
-        $('#hero_b_name').html("");
-        $('#hero_a_wr_hgc').html("");
-        $('#hero_b_wr_hgc').html("");
+        //$('#hero_a_name').html("");
+        //$('#hero_b_name').html("");
+        //$('#hero_a_wr_hgc').html("");
+        //$('#hero_b_wr_hgc').html("");
     });
 
     // Choose a bracket 
@@ -211,12 +210,12 @@ $("button").click(function(){
                             winner = data[2].winner;
                             var img_a_path = '{% static ''%}' + hero_a_image;
                             var img_b_path = '{% static ''%}' + hero_b_image;
-                            $("#hero_a_name").append(hero_a_name);
+                            //$("#hero_a_name").append(hero_a_name);
                             $("#hero_a_img").attr("src", img_a_path);
-                            $("#hero_b_name").append(hero_b_name);
+                            //$("#hero_b_name").append(hero_b_name);
                             $("#hero_b_img").attr("src", img_b_path);
-                            $("#hero_a_wr_hgc").append(data[0].out_1[1][index-5]);
-                            $("#hero_b_wr_hgc").append(data[1].out_2[1][index-5]);
+                            //$("#hero_a_wr_hgc").append(data[0].out_1[1][index-5]);
+                            //$("#hero_b_wr_hgc").append(data[1].out_2[1][index-5]);
                             
                         }
                     });
