@@ -46,7 +46,6 @@ def random_heroes(request):
         if is_ajax:
             if request.method == 'POST':
                 data = json.loads(request.body)
-                print(data)
                 bracket_ind = data['index']
                 for index in BRACKET_LIST.keys():
                     if index == bracket_ind:

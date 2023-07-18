@@ -22,7 +22,7 @@
     </div>
 </div>
 <!-- Modal Game Over -->
-<div class="modal top fade gameOver" id="gameOver" tabindex="-1" aria-labelledby="gameOverLabel" aria-hidden="true" data-mdb-backdrop="true" data-mdb-keyboard="true">
+<div class="modal top fade " id="gameOver" tabindex="-1" aria-labelledby="gameOverLabel" aria-hidden="true" data-mdb-backdrop="true" data-mdb-keyboard="true">
     <div class="modal-dialog  ">
       <div class="modal-content">
         <div class="modal-header">
@@ -40,11 +40,12 @@
     </div>
   </div>
 <!-- Modal Bracket-->
-<div class="modal top fade chooseBracketModal" id="chooseBracketModal" tabindex="-1" aria-labelledby="chooseBracketLabel" aria-hidden="true" data-mdb-backdrop="true" data-mdb-keyboard="true">
+<div class="modal top fade " id="chooseBracketModal" tabindex="-1" aria-labelledby="chooseBracketLabel" aria-hidden="true" data-mdb-backdrop="static" data-mdb-keyboard="false"
+>
     <div class="modal-dialog  ">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="chooseBracketLabel">Pick a bracket</h5>
+          <h5 class="modal-title" id="chooseBracketLabel">Choose bracket</h5>
         </div>
         <div class="modal-body">
             <div class="row">
@@ -75,61 +76,64 @@
 <script type="text/javascript">
     window.onload = function () {
         $('#chooseBracketModal').modal('show');
+        
       }
+    $(document).ready(function(){
+        $('#chooseBracketModal').modal('show');
+    });
     var broj;
     var hero_a_button
     var hero_b_button
     var winner
     var score = 0;
-    $(document).on('click', '#hero_a_button', function(e){
-        e.preventDefault();
-        if (hero_a_name == winner){
-            score++
-            $('#hero_a_name').html("");
-            $('#hero_b_name').html("");
-            $('#hero_a_wr_hgc').html("");
-            $('#hero_b_wr_hgc').html("");
-            $.ajax({
-                url: '{% url 'random_heroes'%}',
-                type: 'GET',
-                dataType: 'json',
-                method: 'POST',
-                headers: {
-                    "X-Requested-With": "XMLHttpRequest",
-                  },
-                
-                data: JSON.stringify({'index': broj}),
-                success: function(data){
-                    hero_a_name = data[0].out_1[0];
-                    hero_b_name = data[1].out_2[0];
-                    hero_a_image = data[0].out_1[1][5];
-                    hero_b_image = data[1].out_2[1][5];
-                    winner = data[2].winner;
-                    var img_a_path = '{% static ''%}' + hero_a_image;
-                    var img_b_path = '{% static ''%}' + hero_b_image;
-                    $("#hero_a_name").append(hero_a_name);
-                    $("#hero_a_img").attr("src", img_a_path);
-                    $("#hero_b_name").append(hero_b_name);
-                    $("#hero_b_img").attr("src", img_b_path);
-                    $("#hero_a_wr_hgc").append(data[0].out_1[1][broj-5]);
-                    $("#hero_b_wr_hgc").append(data[1].out_2[1][broj-5]);
-                    
-                }
-            });
-
-        }
-        else{
-            $('#showScore').html('Streak: ' +score)
-            $('#gameOver').modal('show');
-            score = 0
-            console.log("Loser");
-        }
+$(document).on('click', '#hero_a_button', function(e){
+    e.preventDefault();
+    if (hero_a_name == winner){
+        score++
         $('#hero_a_name').html("");
         $('#hero_b_name').html("");
         $('#hero_a_wr_hgc').html("");
         $('#hero_b_wr_hgc').html("");
-    });
+        $.ajax({
+            url: '{% url 'random_heroes'%}',
+            type: 'GET',
+            dataType: 'json',
+            method: 'POST',
+            headers: {
+                "X-Requested-With": "XMLHttpRequest",
+                },
+            
+            data: JSON.stringify({'index': broj}),
+            success: function(data){
+                hero_a_name = data[0].out_1[0];
+                hero_b_name = data[1].out_2[0];
+                hero_a_image = data[0].out_1[1][5];
+                hero_b_image = data[1].out_2[1][5];
+                winner = data[2].winner;
+                var img_a_path = '{% static ''%}' + hero_a_image;
+                var img_b_path = '{% static ''%}' + hero_b_image;
+                $("#hero_a_name").append(hero_a_name);
+                $("#hero_a_img").attr("src", img_a_path);
+                $("#hero_b_name").append(hero_b_name);
+                $("#hero_b_img").attr("src", img_b_path);
+                $("#hero_a_wr_hgc").append(data[0].out_1[1][broj-5]);
+                $("#hero_b_wr_hgc").append(data[1].out_2[1][broj-5]);
+                
+            }
+        });
 
+    }
+    else{
+        $('#showScore').html('Streak: ' +score)
+        $('#gameOver').modal('show');
+        score = 0
+        console.log("Loser");
+    }
+    $('#hero_a_name').html("");
+    $('#hero_b_name').html("");
+    $('#hero_a_wr_hgc').html("");
+    $('#hero_b_wr_hgc').html("");
+});
 $(document).on('click', '#hero_b_button', function(e){
         e.preventDefault();
         if (hero_b_name == winner){
@@ -217,11 +221,6 @@ $("button").click(function(){
                         }
                     });
                 }
-
-                else if (val == 'hero_a_button' || val == 'hero_b_button'){
-                        console.log(val)
-                }
-
             };
         }
 );
