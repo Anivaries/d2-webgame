@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from bs4 import BeautifulSoup as bs
+from django.views.decorators.csrf import csrf_exempt
 import requests
 import json
 from random import *
 
-BRACKET_LIST = ["Herald", "Guardian", "Crusader", "Archon", "Legend", "Ancient", "Divine-Immortal"]
+BRACKET_LIST = {5:'Herald-Guardian-Crusader',6:'Archon', 7:'Legend', 8:'Ancient', 9:'Divine-Immortal'}
 
 def index(request):
     return render(request, 'index.html')
@@ -37,20 +38,35 @@ def get_data(request):
             json.dump(sorted_dict, f, indent=4)
     return JsonResponse(sorted_dict)
 
-def random_heroes(request):
 
-    with open ('data.json', 'r') as f:
-            f = json.loads(f.read())
-    hero_a = choice(list(f.items()))
-    hero_b = choice([hero for hero in list(f.items()) if hero != hero_a])
-    herald_wr_a = float(hero_a[1][0][:-1])
-    herald_wr_b = float(hero_b[1][0][:-1])
-    if herald_wr_a > herald_wr_b:
-        winner = hero_a[0]
-    else:
-        winner = hero_b[0]
-    
-    return JsonResponse([{'out_1':hero_a},{'out_2':hero_b}, {'winner':winner}], safe=False)
+@csrf_exempt
+def random_heroes(request):
+    try:
+        is_ajax = request.headers.get('X-Requested-With') == ('XMLHttpRequest')
+        if is_ajax:
+            if request.method == 'POST':
+                data = json.loads(request.body)
+                print(data)
+                bracket_ind = data['index']
+                for index in BRACKET_LIST.keys():
+                    if index == bracket_ind:
+                        bracket_id = index-5
+        else:
+             bracket_id = bracket_id            
+        with open ('data.json', 'r') as f:
+                f = json.loads(f.read())
+        hero_a = choice(list(f.items()))
+        hero_b = choice([hero for hero in list(f.items()) if hero != hero_a])
+        _wr_a = float(hero_a[1][bracket_id][:-1])
+        _wr_b = float(hero_b[1][bracket_id][:-1])
+        if _wr_a > _wr_b:
+            winner = hero_a[0]
+        else:
+            winner = hero_b[0]
+        return JsonResponse([{'out_1':hero_a},{'out_2':hero_b},{'winner':winner}], safe=False)
+    except:
+        return HttpResponse("Nope")
+
 
 # TO DO:
 ##

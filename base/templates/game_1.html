@@ -4,7 +4,6 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet"/>
 <div class="container p-5">
     <center>Which hero has higher winrate in:</center>
-    <!-- Mozes staviti slike mesto texta -->
     <center>Herald-Guardian-Crusader bracket</center>
     <div class="row">
         <div class="col-6">
@@ -12,13 +11,13 @@
             <center><div><img id="hero_a_img"></div></center>
             <center><div id="hero_a_wr_hgc">
             </div></center>
-            <center><button onclick="getData()" value="hero_a_button" id="hero_a_button">get random item</button></center>
+            <center><button onclick="" value="hero_a_button" id="hero_a_button">get random item</button></center>
         </div>
         <div class="col-6">
             <center><div id="hero_b_name"></div></center>
             <center><div><img id="hero_b_img"></div></center>
             <center><div id="hero_b_wr_hgc"></div></center>
-            <center><button onclick="getData()" value="hero_b_button" id="hero_b_button">get random item</button></center>
+            <center><button onclick="" value="hero_b_button" id="hero_b_button">get random item</button></center>
         </div>
     </div>
 </div>
@@ -77,51 +76,47 @@
     window.onload = function () {
         $('#chooseBracketModal').modal('show');
       }
-    //$(document).ready(getData())
+    var broj;
     var hero_a_button
     var hero_b_button
     var winner
     var score = 0;
-    function getData(callback) {
-          $.ajax({
-            url: '{% url 'random_heroes'%}',
-            type: 'GET',
-            dataType: 'json',
-            success: function(data){
-                winner = data[2].winner
-                hero_a_name = data[0].out_1[0]
-                hero_b_name = data[1].out_2[0]
-                $("#hero_a_name").append(data[0].out_1[0])
-                $("#hero_b_name").append(data[1].out_2[0])
-                $("#hero_a_wr_hgc").append(data[0].out_1[1][0])
-                $("#hero_b_wr_hgc").append(data[1].out_2[1][0])
-            }
-          });
-        };
     $(document).on('click', '#hero_a_button', function(e){
         e.preventDefault();
         if (hero_a_name == winner){
-            console.log('Win');
             score++
-            console.log(score);
-        }
-        else{
-            $('#showScore').html('Streak: ' +score);
-            $('#gameOver').modal('show');
-            score = 0
-            console.log("Loser");
-        }
-        $('#hero_a_name').html("");
-        $('#hero_b_name').html("");
-        $('#hero_a_wr_hgc').html("");
-        $('#hero_b_wr_hgc').html("");
-    });
-    $(document).on('click', '#hero_b_button', function(e){
-        e.preventDefault();
-        if (hero_b_name == winner){
-            console.log('Win');
-            score++
-            console.log(score);
+            $('#hero_a_name').html("");
+            $('#hero_b_name').html("");
+            $('#hero_a_wr_hgc').html("");
+            $('#hero_b_wr_hgc').html("");
+            $.ajax({
+                url: '{% url 'random_heroes'%}',
+                type: 'GET',
+                dataType: 'json',
+                method: 'POST',
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest",
+                  },
+                
+                data: JSON.stringify({'index': broj}),
+                success: function(data){
+                    hero_a_name = data[0].out_1[0];
+                    hero_b_name = data[1].out_2[0];
+                    hero_a_image = data[0].out_1[1][5];
+                    hero_b_image = data[1].out_2[1][5];
+                    winner = data[2].winner;
+                    var img_a_path = '{% static ''%}' + hero_a_image;
+                    var img_b_path = '{% static ''%}' + hero_b_image;
+                    $("#hero_a_name").append(hero_a_name);
+                    $("#hero_a_img").attr("src", img_a_path);
+                    $("#hero_b_name").append(hero_b_name);
+                    $("#hero_b_img").attr("src", img_b_path);
+                    $("#hero_a_wr_hgc").append(data[0].out_1[1][broj-5]);
+                    $("#hero_b_wr_hgc").append(data[1].out_2[1][broj-5]);
+                    
+                }
+            });
+
         }
         else{
             $('#showScore').html('Streak: ' +score)
@@ -134,43 +129,101 @@
         $('#hero_a_wr_hgc').html("");
         $('#hero_b_wr_hgc').html("");
     });
-    $("button").click(function(){
-        var val = $(this).val();
-            if (val != "hero_a_button" || val != "hero_b_button") {
-                var buttons = document.getElementsByTagName("button");
-                const dataSpread = Object.entries(buttons);
-                for (let [index, vall] of dataSpread.entries()){
-                    if (index > 4 && vall[1].value == val){
-                        $('#chooseBracketModal').modal('hide');
-                        $.ajax({
-                            url: '{% url 'random_heroes'%}',
-                            type: 'GET',
-                            dataType: 'json',
-                            success: function(data){
 
-                                hero_a_name = data[0].out_1[0]
-                                hero_b_name = data[1].out_2[0]
-                                hero_a_image = data[0].out_1[1][5]
-                                hero_b_image = data[1].out_2[1][5]
-                                winner = data[2].winner
-                                var img_a_path = '{% static ''%}' + hero_a_image
-                                var img_b_path = '{% static ''%}' + hero_b_image
-                                $("#hero_a_name").append(hero_a_name)
-                                $("#hero_a_img").attr("src", img_a_path);
-                                $("#hero_b_name").append(hero_b_name)
-                                $("#hero_b_img").attr("src", img_b_path);
-                                $("#hero_a_wr_hgc").append(data[0].out_1[1][index-5])
-                                $("#hero_b_wr_hgc").append(data[1].out_2[1][index-5])
-                            }
-                        })
-                    }
-                };
-            }
-            else {
-                alert("chosen_rank");
-            }
-            
-    
+$(document).on('click', '#hero_b_button', function(e){
+        e.preventDefault();
+        if (hero_b_name == winner){
+            score++
+            $('#hero_a_name').html("");
+            $('#hero_b_name').html("");
+            $('#hero_a_wr_hgc').html("");
+            $('#hero_b_wr_hgc').html("");
+            $.ajax({
+                url: '{% url 'random_heroes'%}',
+                type: 'GET',
+                dataType: 'json',
+                method: 'POST',
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest",
+                  },
+                
+                data: JSON.stringify({'index': broj}),
+                success: function(data){
+                    hero_a_name = data[0].out_1[0];
+                    hero_b_name = data[1].out_2[0];
+                    hero_a_image = data[0].out_1[1][5];
+                    hero_b_image = data[1].out_2[1][5];
+                    winner = data[2].winner;
+                    var img_a_path = '{% static ''%}' + hero_a_image;
+                    var img_b_path = '{% static ''%}' + hero_b_image;
+                    $("#hero_a_name").append(hero_a_name);
+                    $("#hero_a_img").attr("src", img_a_path);
+                    $("#hero_b_name").append(hero_b_name);
+                    $("#hero_b_img").attr("src", img_b_path);
+                    $("#hero_a_wr_hgc").append(data[0].out_1[1][broj-5]);
+                    $("#hero_b_wr_hgc").append(data[1].out_2[1][broj-5]);
+                    
+                }
+            });
+
+        }
+        else{
+            $('#showScore').html('Streak: ' +score)
+            $('#gameOver').modal('show');
+            score = 0
+            console.log("Loser");
+        }
+        $('#hero_a_name').html("");
+        $('#hero_b_name').html("");
+        $('#hero_a_wr_hgc').html("");
+        $('#hero_b_wr_hgc').html("");
     });
+
+    // Choose a bracket 
+$("button").click(function(){
+    var val = $(this).val();
+            var buttons = document.getElementsByTagName("button");
+            const dataSpread = Object.entries(buttons);
+            for (let [index, vall] of dataSpread.entries()){
+                if (index > 4 && vall[1].value == val){
+                    broj = index
+                    console.log(broj)
+                    console.log(index)
+                    $('#chooseBracketModal').modal('hide');
+                    $.ajax({
+                        url: '{% url 'random_heroes'%}',
+                        type: 'GET',
+                        dataType: 'json',
+                        method: 'POST',
+                        headers: {
+                            "X-Requested-With": "XMLHttpRequest",
+                            },
+                        data: JSON.stringify({'index': index}),
+                        success: function(data){
+                            hero_a_name = data[0].out_1[0];
+                            hero_b_name = data[1].out_2[0];
+                            hero_a_image = data[0].out_1[1][5];
+                            hero_b_image = data[1].out_2[1][5];
+                            winner = data[2].winner;
+                            var img_a_path = '{% static ''%}' + hero_a_image;
+                            var img_b_path = '{% static ''%}' + hero_b_image;
+                            $("#hero_a_name").append(hero_a_name);
+                            $("#hero_a_img").attr("src", img_a_path);
+                            $("#hero_b_name").append(hero_b_name);
+                            $("#hero_b_img").attr("src", img_b_path);
+                            $("#hero_a_wr_hgc").append(data[0].out_1[1][index-5]);
+                            $("#hero_b_wr_hgc").append(data[1].out_2[1][index-5]);
+                            
+                        }
+                    });
+                }
+
+                else if (val == 'hero_a_button' || val == 'hero_b_button'){
+                        console.log(val)
+                }
+
+            };
+        }
+);
 </script>
 {% endblock %}
