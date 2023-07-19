@@ -4,22 +4,27 @@ body {
 }
 
 
-#rankOne,
-#rankTwo,
-#rankThree,
-#rankFour {
-    width: 70%;
+#rankThree {
+    width: 90%;
     height: auto;
+    background-color: black;
 }
 
 #rankFive {
+    width: 70%;
+    height: auto;
+    background-color: black;
+}
+
+#rankSix {
     width: 80%;
     height: auto;
+    background-color: black;
 }
 
 button {
     border: 0px;
-    background-color: white;
+    background-color: black;
     size: 70px;
 }
 
@@ -32,4 +37,21 @@ button {
     justify-content: center;
     align-items: center;
     height: 70vh;
+}
+
+.col-5 {
+    background-color: black;
+}
+
+.modal-body {
+    background-color: black;
+}
+
+#chooseBracketLabel {
+    color: rgb(87, 6, 6);
+}
+
+#chooseBracketHeader {
+    background-color: black;
+    justify-content: center;
 }
