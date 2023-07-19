@@ -8,10 +8,8 @@ from random import *
 
 BRACKET_LIST = {1:'Herald-Guardian-Crusader',2:'Archon', 3:'Legend', 4:'Ancient', 5:'Divine-Immortal'}
 
-def index(request):
-    return render(request, 'index.html')
 
-def game_1(request):
+def game(request):
     return render(request, 'game_1.html')
 
 # Download games data to JSON. Use this link once a week or so ( more often if patch is around )
@@ -59,10 +57,6 @@ def random_heroes(request):
         hero_b = choice([hero for hero in list(f.items()) if hero != hero_a])
         _wr_a = float(hero_a[1][bracket_id-1][:-1])
         _wr_b = float(hero_b[1][bracket_id-1][:-1])
-        print(hero_a)
-        print(hero_b)
-        print(_wr_a)
-        print(_wr_b)
         if _wr_a > _wr_b:
             winner = hero_a[0]
         else:
@@ -73,5 +67,6 @@ def random_heroes(request):
 
 
 # TO DO:
-##
-# Styling i guess, backend seems done. Maybe track Score somewhere
+# Add bracket image during the game
+# Make score look nicer / flashier
+# Pretify game-over modal. Maybe make it go horizontally from one side to the other
