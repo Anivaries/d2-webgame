@@ -5,35 +5,33 @@
 <div class="container p-5">
     <center>Which hero has higher winrate in:</center>
     <center>Herald-Guardian-Crusader bracket</center>
+    <center><div id="streak"></div></center>
     <div class="row">
         <div class="col-6">
             <center><div class="hero_a" id="hero_a_name"></div></center>
             <center><div class="hover-zoom"><img id="hero_a_img" class="hover-shadow rounded-circle shadow-custom"></div></center>
             <center><div id="hero_a_wr_hgc">
             </div></center>
-            <center><button onclick="" value="hero_a_button" id="hero_a_button"></button></center>
+            {% comment %} <center><button onclick="" value="hero_a_button" id="hero_a_button"></button></center> {% endcomment %}
         </div>
         <div class="col-6">
             <center><div id="hero_b_name"></div></center>
             <center><div class="hover-zoom"><img id="hero_b_img" class="rounded-circle shadow-custom "></div></center>
             <center><div id="hero_b_wr_hgc"></div></center>
-            <center><button onclick="" value="hero_b_button" id="hero_b_button"></button></center>
+            {% comment %} <center><button onclick="" value="hero_b_button" id="hero_b_button"></button></center> {% endcomment %}
         </div>
     </div>
 </div>
+
 <!-- Modal Game Over -->
-<div class="modal top fade " id="gameOver" tabindex="-1" aria-labelledby="gameOverLabel" aria-hidden="true" data-mdb-backdrop="true" data-mdb-keyboard="true">
+<div class="modal top fade " id="gameOver" tabindex="-1" aria-labelledby="gameOverLabel" aria-hidden="true" data-mdb-backdrop="static" data-mdb-keyboard="false">
     <div class="modal-dialog  ">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="gameOverLabel">Game Over</h5>
-          <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body" id="showScore"></div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">
-            Close
-          </button>
           <a href="{% url 'game'%}"><button type="button" class="btn btn-primary">Play again</button></a>
         </div>
       </div>
@@ -76,14 +74,12 @@
   type="text/javascript"
   src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"
 ></script>
+<!-- Fix BUTTON INDEXES. DAje pogresne brackete -->
 <script type="text/javascript">
     window.onload = function () {
         $('#chooseBracketModal').modal('show');
         
       }
-    $(document).ready(function(){
-        $('#chooseBracketModal').modal('show');
-    });
     var broj;
     var hero_a_button
     var hero_b_button
@@ -119,8 +115,10 @@ $(document).on('click', '#hero_a_img', function(e){
                 $("#hero_a_img").attr("src", img_a_path);
                 //$("#hero_b_name").append(hero_b_name);
                 $("#hero_b_img").attr("src", img_b_path);
-                //$("#hero_a_wr_hgc").append(data[0].out_1[1][broj-5]);
-                //$("#hero_b_wr_hgc").append(data[1].out_2[1][broj-5]);
+                $("#streak").html("");
+                $("#streak").append(score);
+                //$("#hero_a_wr_hgc").append(data[0].out_1[1][broj-1]);
+                //$("#hero_b_wr_hgc").append(data[1].out_2[1][broj-1]);
                 
             }
         });
@@ -167,8 +165,10 @@ $(document).on('click', '#hero_b_img', function(e){
                     $("#hero_a_img").attr("src", img_a_path);
                     //$("#hero_b_name").append(hero_b_name);
                     $("#hero_b_img").attr("src", img_b_path);
-                    //$("#hero_a_wr_hgc").append(data[0].out_1[1][broj-5]);
-                    //$("#hero_b_wr_hgc").append(data[1].out_2[1][broj-5]);
+                    $("#streak").html("");
+                    $("#streak").append(score);
+                    //$("#hero_a_wr_hgc").append(data[0].out_1[1][broj-1]);
+                    //$("#hero_b_wr_hgc").append(data[1].out_2[1][broj-1]);
                     
                 }
             });
@@ -178,6 +178,7 @@ $(document).on('click', '#hero_b_img', function(e){
             $('#showScore').html('Streak: ' +score)
             $('#gameOver').modal('show');
             score = 0
+            $("#streak").html("");
             console.log("Loser");
         }
         //$('#hero_a_name').html("");
@@ -185,14 +186,13 @@ $(document).on('click', '#hero_b_img', function(e){
         //$('#hero_a_wr_hgc').html("");
         //$('#hero_b_wr_hgc').html("");
     });
-
-    // Choose a bracket 
 $("button").click(function(){
     var val = $(this).val();
             var buttons = document.getElementsByTagName("button");
+            console.log(buttons)
             const dataSpread = Object.entries(buttons);
             for (let [index, vall] of dataSpread.entries()){
-                if (index > 4 && vall[1].value == val){
+                if (index > 0 && vall[1].value == val){
                     broj = index
                     console.log(broj)
                     console.log(index)
@@ -212,14 +212,15 @@ $("button").click(function(){
                             hero_a_image = data[0].out_1[1][5];
                             hero_b_image = data[1].out_2[1][5];
                             winner = data[2].winner;
+                            console.log(data)
                             var img_a_path = '{% static ''%}' + hero_a_image;
                             var img_b_path = '{% static ''%}' + hero_b_image;
                             //$("#hero_a_name").append(hero_a_name);
                             $("#hero_a_img").attr("src", img_a_path);
                             //$("#hero_b_name").append(hero_b_name);
                             $("#hero_b_img").attr("src", img_b_path);
-                            //$("#hero_a_wr_hgc").append(data[0].out_1[1][index-5]);
-                            //$("#hero_b_wr_hgc").append(data[1].out_2[1][index-5]);
+                            //$("#hero_a_wr_hgc").append(data[0].out_1[1][broj-1]);
+                            //$("#hero_b_wr_hgc").append(data[1].out_2[1][broj-1]);
                             
                         }
                     });

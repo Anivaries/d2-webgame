@@ -6,7 +6,7 @@ import requests
 import json
 from random import *
 
-BRACKET_LIST = {5:'Herald-Guardian-Crusader',6:'Archon', 7:'Legend', 8:'Ancient', 9:'Divine-Immortal'}
+BRACKET_LIST = {1:'Herald-Guardian-Crusader',2:'Archon', 3:'Legend', 4:'Ancient', 5:'Divine-Immortal'}
 
 def index(request):
     return render(request, 'index.html')
@@ -47,17 +47,22 @@ def random_heroes(request):
             if request.method == 'POST':
                 data = json.loads(request.body)
                 bracket_ind = data['index']
+                print(bracket_ind)
                 for index in BRACKET_LIST.keys():
                     if index == bracket_ind:
-                        bracket_id = index-5
+                        bracket_id = index
         else:
              bracket_id = bracket_id            
         with open ('data.json', 'r') as f:
                 f = json.loads(f.read())
         hero_a = choice(list(f.items()))
         hero_b = choice([hero for hero in list(f.items()) if hero != hero_a])
-        _wr_a = float(hero_a[1][bracket_id][:-1])
-        _wr_b = float(hero_b[1][bracket_id][:-1])
+        _wr_a = float(hero_a[1][bracket_id-1][:-1])
+        _wr_b = float(hero_b[1][bracket_id-1][:-1])
+        print(hero_a)
+        print(hero_b)
+        print(_wr_a)
+        print(_wr_b)
         if _wr_a > _wr_b:
             winner = hero_a[0]
         else:
