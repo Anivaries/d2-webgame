@@ -45,7 +45,6 @@ def random_heroes(request):
             if request.method == 'POST':
                 data = json.loads(request.body)
                 bracket_ind = data['index']
-                print(bracket_ind)
                 for index in BRACKET_LIST.keys():
                     if index == bracket_ind:
                         bracket_id = index
