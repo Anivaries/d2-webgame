@@ -6,7 +6,7 @@ import requests
 import json
 from random import *
 
-BRACKET_LIST = {1:'Herald-Guardian-Crusader',2:'Archon', 3:'Legend', 4:'Ancient', 5:'Divine-Immortal'}
+BRACKET_LIST = {1:'SeasonalRank1-1',2:'SeasonalRank4-1', 3:'SeasonalRank5-1', 4:'SeasonalRank6-1', 5:'SeasonalRankTop2-2'}
 
 
 def game(request):
@@ -43,7 +43,9 @@ def random_heroes(request):
         is_ajax = request.headers.get('X-Requested-With') == ('XMLHttpRequest')
         if is_ajax:
             if request.method == 'POST':
+                print(request.body)
                 data = json.loads(request.body)
+                print(data)
                 bracket_ind = data['index']
                 for index in BRACKET_LIST.keys():
                     if index == bracket_ind:

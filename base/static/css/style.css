@@ -43,15 +43,55 @@ button {
     background-color: black;
 }
 
+.modal-footer {
+    background-color: black !important;
+}
+
+.modal-content {
+    background-color: black !important;
+}
+
 .modal-body {
+    display: flex;
     background-color: black;
+    font-family: "Skranji", cursive;
+    justify-content: center !important;
+    font-size: 30px !important;
+    color: #5F9EA0;
+}
+
+.modal-header {
+    justify-content: center !important;
+    font-family: "Skranji", cursive;
+}
+
+.modal-title {
+    font-size: 35px !important;
+    color: #412535;
 }
 
 #chooseBracketLabel {
-    color: rgb(87, 6, 6);
+    color: #5F9EA0;
 }
 
 #chooseBracketHeader {
     background-color: black;
     justify-content: center;
+}
+
+.btn-dark-moon {
+    background: #141E30;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #243B55, #141E30);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #243B55, #141E30);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    color: #fff;
+    border: 3px solid #eee;
+    --mdb-btn-color: #5F9EA0 !important;
+}
+
+#bracketimg {
+    height: 90px;
+    width: auto;
 }
