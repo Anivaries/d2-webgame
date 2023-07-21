@@ -43,15 +43,13 @@ def random_heroes(request):
         is_ajax = request.headers.get('X-Requested-With') == ('XMLHttpRequest')
         if is_ajax:
             if request.method == 'POST':
-                print(request.body)
                 data = json.loads(request.body)
-                print(data)
                 bracket_ind = data['index']
                 for index in BRACKET_LIST.keys():
                     if index == bracket_ind:
                         bracket_id = index
         else:
-             bracket_id = bracket_id            
+             bracket_id = bracket_id          
         with open ('data.json', 'r') as f:
                 f = json.loads(f.read())
         hero_a = choice(list(f.items()))
@@ -65,9 +63,4 @@ def random_heroes(request):
         return JsonResponse([{'out_1':hero_a},{'out_2':hero_b},{'winner':winner}], safe=False)
     except:
         return HttpResponse("Nope")
-
-
-# TO DO:
-# Add bracket image during the game
-# Make score look nicer / flashier
-# Pretify game-over modal. Maybe make it go horizontally from one side to the other
+    
