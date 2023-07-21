@@ -16,7 +16,7 @@ SECRET_KEY = env('SECRET_KEY')
 DEBUG = env('DEBUG')
 
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['https://dotagames-2c7ef39c6b4c.herokuapp.com/']
 
 
 INSTALLED_APPS = [
@@ -92,7 +92,11 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
+STORAGES = {
+    "staticfiles":{
+        "BACKEND":"whitenoise.storage.CompressedStaticFilesStorage"
+    },
+}
 STATIC_URL = 'static/'
 STATICFILES_DIR = [
     os.path.join(BASE_DIR, 'static')
