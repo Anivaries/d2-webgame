@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static%}
 {% block game_1%}
-<link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet"/>
+{% comment %} <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet"/> {% endcomment %}
 <div class="container p-5">
     <center><h2>Which hero has higher winrate in:</h2></center>
     <center><img id="bracketimg"></center>
@@ -67,11 +67,11 @@
     </div>
   </div>  
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+{% comment %} <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <script
   type="text/javascript"
   src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"
-></script>
+></script> {% endcomment %}
 
 <script type="text/javascript">
     window.onload = function () {
