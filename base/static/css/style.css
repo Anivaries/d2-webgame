@@ -1,6 +1,12 @@
 body {
     background-image: url('images/u79jn5I_c.webp');
-    background-size: 200vh;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    /* background-repeat: no-repeat; */
+    background-size: cover;
+    z-index: 2;
+    background-position: 100%;
 }
 
 

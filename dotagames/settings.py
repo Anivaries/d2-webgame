@@ -17,7 +17,8 @@ DEBUG = env('DEBUG')
 
 
 ALLOWED_HOSTS = ['dotagames-2c7ef39c6b4c.herokuapp.com']
-
+if DEBUG:
+    ALLOWED_HOSTS=['*']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
