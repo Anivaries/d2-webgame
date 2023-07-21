@@ -7,4 +7,6 @@ Higher/lower game for DotA2 hero winrates per bracket.
 Packages used:  
 
 -*BeautifulSoup4*  
--*requests*
+-*requests*  
+
+Game link: https://dotagames-2c7ef39c6b4c.herokuapp.com/
