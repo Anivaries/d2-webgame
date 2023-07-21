@@ -1,5 +1,4 @@
 Higher/lower game for DotA2 hero winrates per bracket. 
-Used my old code which i used for GUI game, i created a web app which does the same. 
 
  -Part of the code scraps https://www.dotabuff.com/ for data (which is only done once i run that function). Data from the link is saved to `.json` file.  
 
