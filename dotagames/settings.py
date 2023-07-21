@@ -92,11 +92,7 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-STORAGES = {
-    "staticfiles":{
-        "BACKEND":"whitenoise.storage.CompressedManifestStaticFilesStorage"
-    },
-}
+
 STATIC_URL = 'static/'
 STATICFILES_DIR = [
     os.path.join(BASE_DIR, 'static')
