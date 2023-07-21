@@ -16,7 +16,7 @@ SECRET_KEY = env('SECRET_KEY')
 DEBUG = env('DEBUG')
 
 
-ALLOWED_HOSTS = ['https://dotagames-2c7ef39c6b4c.herokuapp.com/']
+ALLOWED_HOSTS = ['dotagames-2c7ef39c6b4c.herokuapp.com']
 
 
 INSTALLED_APPS = [
